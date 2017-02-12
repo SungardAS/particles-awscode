@@ -19,6 +19,7 @@
   "dependencies": {
     "condensation": "^0.6.0",
     "config": "^1.21.0",
+    "git-rev-sync": "^1.8.0",
     "gulp": "^3.9.1",
     "particles-core": "^0.5.2"
   },

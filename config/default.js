@@ -1,15 +1,41 @@
+var gitrev = require('git-rev-sync');
+
+var regions = [
+  'us-east-1',
+  'us-west-2'
+];
+
+var buckets = [];
+var versionPath = gitrev.branch();
+
+if (process.env.TRAVIS) {
+  if (process.env.TRAVIS_PULL_REQUEST !== "false") {
+    versionPath = ["PR",process.env.TRAVIS_PULL_REQUEST].join('/');
+  }
+  else if (process.env.TRAVIS_TAG) {
+    versionPath = ["release",process.env.TRAVIS_TAG].join('/');
+  }
+  else {
+    versionPath = process.env.TRAVIS_BRANCH;
+  }
+}
+
+regions.forEach(function(regionName) {
+  buckets.push({
+    aws: {
+      region: regionName,
+      bucket: 'condensation-particles.'+regionName
+    },
+    prefix: 'particles-awscode/'+versionPath,
+    clean: true,
+    validate: true,
+    create: true
+  });
+});
+
+
 var config = {
-  s3: [
-    {
-      aws: {
-        region: 'us-east-1',
-        bucket: ''
-      },
-      clean: true,
-      validate: true,
-      create: true
-    }
-  ],
+  s3: buckets,
   dist: 'dist'
 };
 
