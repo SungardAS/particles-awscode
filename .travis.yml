@@ -3,6 +3,12 @@ node_js:
 - '7'
 - '6'
 - '4'
+matrix:
+  include:
+  - node_js: 6
+    env: DEPLOY=true
+after_success: if [[ $DEPLOY == "true" ]] ; then ./node_modules/.bin/gulp condensation:deploy
+  ; else echo "no deploy" ; fi
 env:
   global:
   - secure: DAhNi21r+qhWcl5gvj/eae41OsD/dbLY+m7iE0ZM9yMWaH/limHhUmXwrSr9sIgLgg8A2hke84dIfiDqI2ogeiuqf9AVqbeYKUoDRk9SUZDTF94VWLCNgc9n1Gv1+vAZzSzb1xTkcVnF+pXzSvcS4LxkbXEcqevrXQPZM3x3sSVz2Vi5wiZpKq2Tgqd3MM9SaaFl4rwNWODOTvJgG+0jLOSwXS8v+kLJ19wBSQH9wyao5ijbptA3SeuVj4fix9uxfJ9DaxFCLaULohmFFJ7YYIWlfGlHHs6khInU4b80+3+OiEd9diFk8mkhB4xYP+geKdvueWoWyF1/957eFUV3F3yG3iDD1VFHmBOZJkgoRfOYQqsHSZotT+PsNVAFz1G0p8/2aBZ8zNX7D+vrzRtvNn8GdB7i9ldoKItdkey0n/vPkRdzVQT57xmEwXgfyegKCV8B2wTJoxgOhioxlym0vmpR0IdBbfbpJUct3ORR1nc+BFCT7+RnEsJSFlJmODBz+3lOhEeOY8/A2jjD1pZ5+jyJecPJFWEwT3xNnKxvzfR6AbSWKpNFssVrC6m6ykxqZmpIrqPljh36Ytedbtk8p00DLJWrd122VHGsSfCHCdV5BufVXUe3LpyfSqDKVR6SOF/w8Ura4xEmsW/rUv+wa/zLgJV/c2YaSAvdE/ZuDSk=
