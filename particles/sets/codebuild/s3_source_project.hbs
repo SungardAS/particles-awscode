@@ -8,7 +8,7 @@
   description="Name of the output bucket. If left blank, one will be created."
   optional=true
 }}
-{{set "m:core" "empty_conditions" parameterLogicalId="ArtifactsLocation"}}
+{{set "m:core" "empty_conditions" parameterLogicalId=(scopeId "ArtifactsLocation")}}
 
 {{parameter "codebuild/artifacts_name" logicalId="ArtifactsName" }}
 {{parameter "codebuild/artifacts_namespace_type" logicalId="ArtifactsNamespaceType"}}
