@@ -1,0 +1,13 @@
+{{
+  resource "m:core" "spec"
+  type="AWS::S3::Bucket"
+  Name=(
+    fnSub
+    "${AWS::Account}.cicd.sources.${AWS::Region}"
+  )
+  VersioningConfiguration=(
+    helper "m:core" "propertySpec"
+    type="AWS::S3::Bucket.VersioningConfiguration"
+    Status="Enabled"
+  )
+}}

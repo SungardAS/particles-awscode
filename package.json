@@ -1,0 +1,29 @@
+{
+  "name": "particles-awscode",
+  "version": "0.0.0",
+  "description": "Condensation particles for building AWS CloudFormation templates.",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha",
+    "build": "./node_modules/.bin/gulp condensation:build",
+    "deploy": "./node_modules/.bin/gulp condensation:deploy",
+    "gulp": "./node_modules/.bin/gulp"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "condensation-particles",
+    "aws",
+    "cloudformation",
+    "cloud",
+    "formation"
+  ],
+  "dependencies": {
+    "condensation": "^0.6.0",
+    "config": "^1.21.0",
+    "gulp": "^3.9.1",
+    "particles-core": "^0.5.2"
+  },
+  "devDependencies": {
+    "condensation-particle-tests": "^0.5.4",
+    "mocha": "^2.5.3"
+  }
+}

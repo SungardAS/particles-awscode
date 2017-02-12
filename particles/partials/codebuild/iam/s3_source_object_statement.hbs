@@ -1,0 +1,10 @@
+{
+    "Effect": "Allow",
+    "Resource": [
+        {{fnSub "arn:aws:s3:::${s3location}" s3location=s3location}}
+    ],
+    "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion"
+    ]
+}

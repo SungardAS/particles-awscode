@@ -1,0 +1,12 @@
+{
+    "Effect": "Allow",
+    "Resource": [
+        {{fnSub "arn:aws:logs:us-east-1:546276914724:log-group:/aws/codebuild/${logsname}" logsname=logsname}},
+        {{fnSub "arn:aws:logs:us-east-1:546276914724:log-group:/aws/codebuild/${logsname}:*" logsname=logsname}}
+    ],
+    "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+    ]
+}
