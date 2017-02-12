@@ -40,7 +40,7 @@
   resource "m:core" "spec"
   type="AWS::IAM::ManagedPolicy"
   logicalId="CodeBuildManagedPolicy"
-  Description=(fnSub "ManagedPolicy for CodeBuild project ${ProjectName}")
+  Description=(fnSub "ManagedPolicy for CodeBuild project ${projectName}" projectName=(ref "ProjectName") )
   PolicyDocument=(
     partial "codebuild/iam/policy_document"
     statement=(
@@ -59,7 +59,7 @@
         s3location=(
           fnIf (scopeId "SourceLocationIsPopulated")
           (ref "SourceLocation")
-          (fnSub "${CodeBuildBucket}/sources/${ProjectName}.zip")
+          (fnSub "${codeBuildBucket}/sources/${projectName}.zip" codeBuildBucket=(ref "CodeBuildBucket") projectName=(ref "ProjectName") )
         )
       )
     )
@@ -104,7 +104,7 @@
     Location=(
       fnIf (scopeId "SourceLocationIsPopulated")
       (ref "SourceLocation")
-      (fnSub "${CodeBuildBucket}/sources/${ProjectName}.zip")
+      (fnSub "${CodeBuildBucket}/sources/${projectName}.zip" projectName=(ref "ProjectName") )
     )
     Type="S3"
   )
