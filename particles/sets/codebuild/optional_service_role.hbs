@@ -1,0 +1,16 @@
+
+{{
+  parameter "codebuild/project_service_role"
+  logicalId="ProjectServiceRole"
+  optional=true
+  description="The ARN of an existing IAM role.  If left blank a new role will be created"
+}}
+{{set "m:core" "empty_conditions" parameterLogicalId=(scopeId "ProjectServiceRole")}}
+
+{{
+  resource "m:core" "spec"
+  type="AWS::IAM::Role"
+  logicalId="CodeBuildServiceRole"
+  condition=(scopeId "ProjectServiceRoleIsEmpty")
+  AssumeRolePolicyDocument=(partial "codebuild/iam/trust_policy_statement")
+}}

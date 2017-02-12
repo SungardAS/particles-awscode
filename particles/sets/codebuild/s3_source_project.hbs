@@ -1,0 +1,112 @@
+{{parameter "codebuild/project_name" logicalId="ProjectName" }}
+{{parameter "codebuild/project_description" logicalId="ProjectDescription"}}
+{{parameter "codebuild/project_encryption_key" logicalId="ProjectEncryptionKey" optional=true}}
+
+{{
+  parameter "codebuild/artifacts_location"
+  logicalId="ArtifactsLocation"
+  description="Name of the output bucket. If left blank, one will be created."
+  optional=true
+}}
+{{set "m:core" "empty_conditions" parameterLogicalId="ArtifactsLocation"}}
+
+{{parameter "codebuild/artifacts_name" logicalId="ArtifactsName" }}
+{{parameter "codebuild/artifacts_namespace_type" logicalId="ArtifactsNamespaceType"}}
+{{parameter "codebuild/artifacts_packaging" logicalId="ArtifactsPackaging"}}
+{{parameter "codebuild/artifacts_path" logicalId="ArtifactsPath" optional=true}}
+{{parameter "codebuild/artifacts_type" logicalId="ArtifactsType"}}
+
+{{parameter "codebuild/environment_compute_type" logicalId="EnvironmentComputeType"}}
+{{parameter "codebuild/environment_image" logicalId="EnvironmentImage"}}
+{{parameter "codebuild/environment_type" logicalId="EnvironmentType"}}
+
+{{parameter "codebuild/source_location" logicalId="SourceLocation" optional=true}}
+{{set "m:core" "empty_conditions" parameterLogicalId=(scopeId "SourceLocation")}}
+
+{{set "codebuild/optional_service_role"}}
+
+{{#condition logicalId="CreateBucketCondition"}}
+  {{fnOr (scopeId "ArtifactsLocationIsEmpty") (scopeId "SourceLocationIsEmpty")}}
+{{/condition}}
+
+{{
+  resource "m:core" "spec"
+  type="AWS::S3::Bucket"
+  logicalId="CodeBuildBucket"
+  condition=(scopeId "CreateBucketCondition")
+}}
+
+{{
+  resource "m:core" "spec"
+  type="AWS::IAM::ManagedPolicy"
+  logicalId="CodeBuildManagedPolicy"
+  Description=(fnSub "ManagedPolicy for CodeBuild project ${ProjectName}")
+  PolicyDocument=(
+    partial "codebuild/iam/policy_document"
+    statement=(
+      arrayify
+      (partial "codebuild/iam/logs_statement" logsname=(ref "ProjectName") )
+      (
+        partial "codebuild/iam/artifacts_bucket_statement"
+        s3bucket=(
+          fnIf (scopeId "ArtifactsLocationIsPopulated")
+          (ref "ArtifactsLocation")
+          (ref "CodeBuildBucket")
+        )
+      )
+      (
+        partial "codebuild/iam/s3_source_object_statement"
+        s3location=(
+          fnIf (scopeId "SourceLocationIsPopulated")
+          (ref "SourceLocation")
+          (fnSub "${CodeBuildBucket}/sources/${ProjectName}.zip")
+        )
+      )
+    )
+  )
+  Roles=(arrayify
+    (
+      fnIf (scopeId "ProjectServiceRoleIsPopulated")
+      (ref "ProjectServiceRole")
+      (ref "CodeBuildServiceRole")
+    )
+  )
+}}
+
+{{
+  resource "m:core" "spec"
+  type="AWS::CodeBuild::Project"
+  logicalId="Project"
+  Description=(ref "ProjectDescription")
+  ServiceRole=(fnIf (scopeId "ProjectServiceRoleIsPopulated") (ref "ProjectServiceRole") (ref "CodeBuildServiceRole"))
+  Name=(ref "ProjectName")
+  Artifacts=(
+    helper "m:core" "propertySpec" "AWS::CodeBuild::Project.Artifacts"
+    Location=(
+      fnIf (scopeId "ArtifactsLocationIsPopulated")
+      (ref "ArtifactsLocation")
+      (ref "CodeBuildBucket")
+    )
+    Name=(ref "ArtifactsName")
+    NamespaceType=(ref "ArtifactsNamespaceType")
+    Packaging=(ref "ArtifactsPackaging")
+    Path=(ref "ArtifactsPath")
+    Type=(ref "ArtifactsType")
+  )
+  Environment=(
+    helper "m:core" "propertySpec" "AWS::CodeBuild::Project.Environment"
+    ComputeType=(ref "EnvironmentComputeType")
+    Image=(ref "EnvironmentImage")
+    Type=(ref "EnvironmentType")
+  )
+  Source=(
+    helper "m:core" "propertySpec" "AWS::CodeBuild::Project.Source"
+    Location=(
+      fnIf (scopeId "SourceLocationIsPopulated")
+      (ref "SourceLocation")
+      (fnSub "${CodeBuildBucket}/sources/${ProjectName}.zip")
+    )
+    Type="S3"
+  )
+
+}}
