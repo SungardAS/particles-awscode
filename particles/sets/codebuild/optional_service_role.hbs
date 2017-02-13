@@ -8,9 +8,32 @@
 {{set "m:core" "empty_conditions" parameterLogicalId=(scopeId "ProjectServiceRole")}}
 
 {{
+  parameter "m:core" "base"
+  type="CommaDelimitedList"
+  logicalId="ServiceRolePolicies"
+  optional=true
+  description="If a ServiceRole is not provided these optional Managed Policy ARNs will be attached to the new role that is created by this template."
+}}
+{{#condition logicalId="ServiceRolePoliciesIsPopulated"}}
+  {{
+    fnNot
+    ( fnEquals (fnJoin "" (ref "ServiceRolePolicies")) "")
+  }}
+{{/condition}}
+
+{{#condition logicalId="AddManagedPoliciesCondition"}}
+  {{fnAnd (scopeId "ProjectServiceRoleIsEmpty") (scopeId "ServiceRolePoliciesIsPopulated")}}
+{{/condition}}
+
+{{
   resource "m:core" "spec"
   type="AWS::IAM::Role"
   logicalId="CodeBuildServiceRole"
   condition=(scopeId "ProjectServiceRoleIsEmpty")
   AssumeRolePolicyDocument=(partial "codebuild/iam/trust_policy_statement")
+  ManagedPolicyArns=(
+    fnIf "AddManagedPoliciesCondition"
+    (ref "ServiceRolePolicies")
+    (ref "AWS::NoValue")
+  )
 }}
