@@ -1,8 +1,8 @@
 {
     "Effect": "Allow",
     "Resource": [
-      {{fnSub "arn:aws:logs:us-east-1:${AWS::AccountId}:log-group:/aws/codebuild/${logsname}" logsname=logsname}},
-      {{fnSub "arn:aws:logs:us-east-1:${AWS::AccountId}:log-group:/aws/codebuild/${logsname}:*" logsname=logsname}}
+      {{fnSub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/${logsname}" logsname=logsname}},
+      {{fnSub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/${logsname}:*" logsname=logsname}}
     ],
     "Action": [
         "logs:CreateLogGroup",
