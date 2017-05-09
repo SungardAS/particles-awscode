@@ -1,3 +1,5 @@
 {{#layout}}
   {{set "cicd_buckets"}}
+  {{output "m:core" "base" logicalId="SourcesBucketName" value=(ref "SourcesBucket")}}
+  {{output "m:core" "base" logicalId="ArtifactsBucketName" value=(ref "ArtifactsBucket")}}
 {{/layout}}
