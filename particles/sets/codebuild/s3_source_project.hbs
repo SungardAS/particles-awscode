@@ -98,6 +98,10 @@
     ComputeType=(ref "EnvironmentComputeType")
     Image=(ref "EnvironmentImage")
     Type=(ref "EnvironmentType")
+    EnvironmentVariables=(
+      arrayify
+      (objectify Name="AWS_ACCOUNT_ID" Value=(ref "AWS::AccountId"))
+    )
   )
   Source=(
     helper "m:core" "propertySpec" "AWS::CodeBuild::Project.Source"

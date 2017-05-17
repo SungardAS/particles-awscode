@@ -17,11 +17,11 @@
     "formation"
   ],
   "dependencies": {
-    "condensation": "^0.6.6",
-    "config": "^1.21.0",
-    "git-rev-sync": "^1.8.0",
+    "condensation": "^0.6.8",
+    "config": "^1.26.1",
+    "git-rev-sync": "^1.9.1",
     "gulp": "^3.9.1",
-    "particles-core": "^0.5.2"
+    "particles-core": "^0.5.3"
   },
   "devDependencies": {
     "condensation-particle-tests": "^0.5.4",
