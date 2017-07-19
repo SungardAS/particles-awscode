@@ -1,5 +1,23 @@
+---
+TemplateDescription: |
+  Source and Artifact buckets for CodeBuild and CodePipeline
+---
+
 {{#layout}}
   {{set "cicd_buckets"}}
-  {{output "m:core" "base" logicalId="SourcesBucketName" value=(ref "SourcesBucket")}}
-  {{output "m:core" "base" logicalId="ArtifactsBucketName" value=(ref "ArtifactsBucket")}}
+
+  {{
+    output "m:core" "base"
+    logicalId="SourcesBucketName"
+    value=(ref "SourcesBucket")
+    description="Source code bucket for AWS CodeBuild"
+  }}
+
+  {{
+    output "m:core" "base"
+    logicalId="ArtifactsBucketName"
+    value=(ref "ArtifactsBucket")
+    description="Artifacts bucket for AWS CodePipeline"
+  }}
+
 {{/layout}}
