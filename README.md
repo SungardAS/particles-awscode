@@ -26,8 +26,17 @@ CodePipeline
 
 |region|launch|
 |------|------|
-|us-east-1|[![Launch Stack][launch-stack-image]][launch-stack-us-east-1-url]|
-|us-east-2|[![Launch Stack][launch-stack-image]][launch-stack-us-east-2-url]|
+|us-east-1|[![Launch Stack][launch-stack-image]][buckets-stack-us-east-1-url]|
+|us-east-2|[![Launch Stack][launch-stack-image]][buckets-stack-us-east-2-url]|
+
+### CodeBuild S3
+
+Create a CodeBuild Project that uses S3 as the source
+
+|region|launch|
+|------|------|
+|us-east-1|[![Launch Stack][launch-stack-image]][codebuilds3-stack-us-east-1-url]|
+|us-east-2|[![Launch Stack][launch-stack-image]][codebuilds3-stack-us-east-2-url]|
 
 ---
 
@@ -44,5 +53,7 @@ Apache-2.0 ©
 
 
 [launch-stack-image]: https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png
-[launch-stack-us-east-1-url]: https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=awscode-buckets&templateURL=https://s3.amazonaws.com/condensation-particles.us-east-1/particles-awscode/master/particles/cftemplates/buckets.template.json
-[launch-stack-us-east-2-url]: https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=awscode-buckets&templateURL=https://s3.amazonaws.com/condensation-particles.us-east-2/particles-awscode/master/particles/cftemplates/buckets.template.json
+[buckets-stack-us-east-1-url]: https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=awscode-buckets&templateURL=https://s3.amazonaws.com/condensation-particles.us-east-1/particles-awscode/master/particles/cftemplates/buckets.template.json
+[buckets-stack-us-east-2-url]: https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=awscode-buckets&templateURL=https://s3.amazonaws.com/condensation-particles.us-east-2/particles-awscode/master/particles/cftemplates/buckets.template.json
+[codebuilds3-stack-us-east-1-url]: https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=awscode-buckets&templateURL=https://s3.amazonaws.com/condensation-particles.us-east-1/particles-awscode/master/particles/cftemplates/codebuild_s3.template.json
+[codebuilds3-stack-us-east-2-url]: https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=awscode-buckets&templateURL=https://s3.amazonaws.com/condensation-particles.us-east-2/particles-awscode/master/particles/cftemplates/codebuild_s3.template.json
