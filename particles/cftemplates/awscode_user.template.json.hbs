@@ -15,7 +15,7 @@
     logicalId="Policy"
     PolicyName="awscode"
     PolicyDocument=(
-      partial "awscode_user_policydoc"
+      partial "iam/user_policy"
       sourcesBucket=(ref "SourcesBucket")
       artifactsBucket=(ref "ArtifactsBucket")
     )

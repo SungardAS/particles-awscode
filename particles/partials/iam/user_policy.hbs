@@ -1,0 +1,55 @@
+ {
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "codebuild:BatchGetBuilds",
+        "codebuild:ListBuilds",
+        "codebuild:ListBuildsForProject",
+        "codebuild:StartBuild"
+      ],
+      "Resource": [
+        "*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": [
+        {{fnSub "arn:aws:s3:::${sourcesBucket}/codebuild/transics-poc*" sourcesBucket=sourcesBucket}}
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject"
+      ],
+      "Resource": [
+        {{fnSub "arn:aws:s3:::${sourcesBucket}/codepipeline/transics-poc*" sourcesBucket=sourcesBucket}}
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": [
+        {{fnSub "arn:aws:s3:::${artifactsBucket}/transics-poc*" artifactsBucket=artifactsBucket}}
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        {{fnSub "arn:aws:s3:::${artifactsBucket}" artifactsBucket=artifactsBucket}}
+      ],
+      "Condition":{"StringLike":{"s3:prefix":["transics-poc/*"]}}
+    }
+  ]
+}
