@@ -1,0 +1,28 @@
+{{#layout TemplateDescription="IAM User for interaction with CodeBuild and Pipeline"}}
+
+  {{parameter "m:core" "base" type="String" logicalId="SourcesBucket"}}
+  {{parameter "m:core" "base" type="String" logicalId="ArtifactsBucket"}}
+
+  {{
+    resource "m:core" "spec"
+    type="AWS::IAM::User"
+    logicalId="User"
+  }}
+
+  {{
+    resource "m:core" "spec"
+    type="AWS::IAM::Policy"
+    logicalId="Policy"
+    PolicyName="awscode"
+    PolicyDocument=(
+      partial "awscode_user_policydoc"
+      sourcesBucket=(ref "SourcesBucket")
+      artifactsBucket=(ref "ArtifactsBucket")
+    )
+    Users=(arrayify (ref "User"))
+  }}
+
+  {{output "m:core" "base" logicalId="UserName" value=(ref "User")}}
+
+{{/layout}}
+
