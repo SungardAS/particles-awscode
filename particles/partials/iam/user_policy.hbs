@@ -19,7 +19,7 @@
         "s3:PutObject"
       ],
       "Resource": [
-        {{fnSub "arn:aws:s3:::${sourcesBucket}/codebuild/transics-poc*" sourcesBucket=sourcesBucket}}
+        {{fnSub "arn:aws:s3:::${sourcesBucket}/codebuild/*" sourcesBucket=sourcesBucket}}
       ]
     },
     {
@@ -28,7 +28,7 @@
         "s3:PutObject"
       ],
       "Resource": [
-        {{fnSub "arn:aws:s3:::${sourcesBucket}/codepipeline/transics-poc*" sourcesBucket=sourcesBucket}}
+        {{fnSub "arn:aws:s3:::${sourcesBucket}/codepipeline/*" sourcesBucket=sourcesBucket}}
       ]
     },
     {
@@ -38,7 +38,7 @@
         "s3:PutObject"
       ],
       "Resource": [
-        {{fnSub "arn:aws:s3:::${artifactsBucket}/transics-poc*" artifactsBucket=artifactsBucket}}
+        {{fnSub "arn:aws:s3:::${artifactsBucket}/*" artifactsBucket=artifactsBucket}}
       ]
     },
     {
@@ -49,7 +49,7 @@
       "Resource": [
         {{fnSub "arn:aws:s3:::${artifactsBucket}" artifactsBucket=artifactsBucket}}
       ],
-      "Condition":{"StringLike":{"s3:prefix":["transics-poc/*"]}}
+      "Condition":{"StringLike":{"s3:prefix":["*"]}}
     }
   ]
 }
