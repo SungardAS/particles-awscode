@@ -1,0 +1,28 @@
+{{
+  helper "m:core" "propertySpec"
+  type="AWS::CodePipeline::Pipeline.ActionDeclaration"
+  Name=name
+  ActionTypeId=(
+    helper "m:core" "propertySpec"
+    type="AWS::CodePipeline::Pipeline.ActionTypeId"
+    Category="Source"
+    Owner="AWS"
+    Provider="S3"
+    Version="1"
+  )
+  Configuration=(
+    objectify
+    S3Bucket=(cValue s3Bucket)
+    S3ObjectKey=(cValue s3ObjectKey)
+  )
+  OutputArtifacts=(
+    arrayify
+    (
+      helper "m:core" "propertySpec"
+      type="AWS::CodePipeline::Pipeline.OutputArtifact"
+      Name=artifactsName
+    )
+  )
+}}
+
+

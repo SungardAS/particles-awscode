@@ -1,0 +1,24 @@
+{{
+  helper "m:core" "propertySpec"
+  type="AWS::CodePipeline::Pipeline.ActionDeclaration"
+  Name=Name
+  ActionTypeId=(
+    helper "m:core" "propertySpec"
+    type="AWS::CodePipeline::Pipeline.ActionTypeId"
+    Category="Deploy"
+    Owner="AWS"
+    Provider="CloudFormation"
+    Version="1"
+  )
+  Configuration=Configuration
+  InputArtifacts=InputArtifcts
+  OutputArtifacts=(
+    arrayify
+    (
+      helper "m:core" "propertySpec"
+      type="AWS::CodePipeline::Pipeline.OutputArtifact"
+      Name=(fnSub "${Name}-output" Name=Name)
+    )
+  )
+}}
+
